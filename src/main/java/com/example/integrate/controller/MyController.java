@@ -176,7 +176,7 @@ public class MyController {
         String url="http://localhost:8091/clientB/api/stu/dropLesson_clientB";
         ResponseEntity<ResponseVO> responseEntity=restTemplate.postForEntity(url,xmlb,ResponseVO.class);
         String resultb=(String) responseEntity.getBody().getContent();
-        if(resultb.equals("")){
+        if(resultb==null){
             url="http://localhost:8092/clientA/api/stu/dropLesson_clientA";
             ResponseEntity<ResponseVO> responseEntity1=restTemplate.postForEntity(url,xmla,ResponseVO.class);
             String resultc=(String) responseEntity1.getBody().getContent();
@@ -207,11 +207,9 @@ public class MyController {
         if(!flag){
             System.out.println("ChoiceB格式不正确");
         }
-        else {
-            xmlTool.transformXmlByXslt("doc/1.xml","doc/2.xml","doc/xsl/formatClassChoice.xsl");
-            xmlTool.transformXmlByXslt("doc/2.xml","doc/a.xml","doc/xsl/choiceToA.xsl");
-            xmlTool.transformXmlByXslt("doc/2.xml","doc/c.xml","doc/xsl/choiceToC.xsl");
-        }
+        xmlTool.transformXmlByXslt("doc/1.xml","doc/2.xml","doc/xsl/formatClassChoice.xsl");
+        xmlTool.transformXmlByXslt("doc/2.xml","doc/a.xml","doc/xsl/choiceToA.xsl");
+        xmlTool.transformXmlByXslt("doc/2.xml","doc/c.xml","doc/xsl/choiceToC.xsl");
         SAXReader reader=new SAXReader();
         String xmlc,xmla;
         Document document=reader.read(new File("doc/a.xml"));
@@ -221,7 +219,7 @@ public class MyController {
         String url="http://localhost:8090/clientC/api/stu/dropLesson_clientC";
         ResponseEntity<ResponseVO> responseEntity=restTemplate.postForEntity(url,xmlc,ResponseVO.class);
         String resultC=(String) responseEntity.getBody().getContent();
-        if(resultC.equals("")){
+        if(resultC==null){
             url="http://localhost:8092/clientA/api/stu/dropLesson_clientA";
             ResponseEntity<ResponseVO> responseEntity1=restTemplate.postForEntity(url,xmla,ResponseVO.class);
             String resultA=(String) responseEntity1.getBody().getContent();
